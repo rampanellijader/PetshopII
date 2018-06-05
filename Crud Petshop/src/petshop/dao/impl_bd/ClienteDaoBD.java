@@ -99,7 +99,7 @@ public class ClienteDaoBD implements ClienteDao {
 
     public void atualizar(Cliente cliente) {
         try {
-            String sql = "UPDATE cliente SET rg=?, nome=?, datanascimento=? "
+            String sql = "UPDATE cliente SET rg=?, nome=?, telefone=? "
                     + "WHERE id=?";
 
             conectar(sql);
