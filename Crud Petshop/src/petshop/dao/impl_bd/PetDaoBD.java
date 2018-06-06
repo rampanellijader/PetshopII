@@ -16,6 +16,12 @@ public class PetDaoBD {
       private Connection conexao;
     private PreparedStatement comando;
 
+    public PetDaoBD() {
+
+    }
+
+   
+
     
     public Connection conectar(String sql) throws SQLException {
         conexao = ConnectionFactory.getConnection();
