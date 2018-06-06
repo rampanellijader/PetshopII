@@ -16,7 +16,7 @@ import petshop.view.menu.PetMenu;
 public class PetUi {
    private PetDao petDao;
    
-       public PetUi() {
+        public PetUi() {
         petDao = new PetDaoBD();
     }
 
@@ -58,17 +58,31 @@ public class PetUi {
     private void cadastrarPet() {
        String nome = Console.scanString("nome");
        String tp_animal = Console.scanString("tipo animal");
-       Cliente cli = listar();
+      // Cliente cli = listar();
     }
 
     private void deletarPet() {
        String nome = Console.scanString("Nome do pet a ser deletado: ");
        Pet pet = petDao.procurarPorNome(nome);
-        this.mostrarPets(pet);
+        this.mostrarPet(pet);
     }
 
     private void atualizarPet() {
-        
+        String nome = Console.scanString("Nome do pet a ser alterado: ");
+
+        Pet pet = petDao.procurarPorNome(nome);
+        this.mostrarPet(pet);
+
+        System.out.println("Digite os dados do pet que quer alterar [Vazio caso nao queira]");
+        String tp_animal = Console.scanString("Tipo animal: ");
+        if (!nome.isEmpty()) {
+           pet.setTp_animal(tp_animal);        
+        }
+       
+
+        petDao.atualizar(pet);
+        System.out.println("Pet " + nome + " atualizado com sucesso!");
+ 
     }
 
     private void mostrarPets() {

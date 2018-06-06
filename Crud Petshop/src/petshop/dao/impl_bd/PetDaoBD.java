@@ -77,7 +77,7 @@ public class PetDaoBD {
         }
     }
 
-    public void deletar(Pet pet) {
+    public void deletar() {
         try {
             String sql = "DELETE FROM pet WHERE id = ?";
 
