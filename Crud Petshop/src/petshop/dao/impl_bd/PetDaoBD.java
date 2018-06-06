@@ -47,7 +47,7 @@ public class PetDaoBD {
      public void salvar(Pet pet) {
         int id = 0;
         try {
-            String sql = "INSERT INTO pet (nome, tp_animal, cliente) "
+            String sql = "INSERT INTO pet (nome, tp_animal, cli_id) "
                     + "VALUES (?,?,?)";
 
   //criado um novo método conectar para obter o id

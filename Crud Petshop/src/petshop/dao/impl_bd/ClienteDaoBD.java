@@ -44,9 +44,6 @@ public class ClienteDaoBD implements ClienteDao {
 
     }  
 
-    //Metodo salvar: trabalhar com data e recebe o id auto-increment 
-    //e já relaciona no objeto paciente (recebido por parâmetro)
-    //Caso queira retornar, só retornar id.
     public void salvar(Cliente cliente) {
         int id = 0;
         try {

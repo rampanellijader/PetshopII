@@ -1,0 +1,17 @@
+create table cliente (
+id serial primary key,
+rg varchar(15),
+nome varchar(30),
+telefone varchar(10)
+);
+
+create table mac(
+id serial primary key,
+nome varchar (15)   ,
+tp_animal varchar(15),
+cli_id smallint  references cliente.id
+);
+    
+select * from cliente;
+
+select * from pet;
