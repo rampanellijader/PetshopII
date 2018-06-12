@@ -1,5 +1,6 @@
 package petshop.dao.impl_bd;
 
+
 import dao.ClienteDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,10 @@ import petshop.dominio.Cliente;
 //import dao.impl_BD.ClienteDao;
 
 public class ClienteDaoBD implements ClienteDao {
+
+    public static Cliente procurarPorRg(Cliente rg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private Connection conexao;
     private PreparedStatement comando;
 
@@ -70,7 +75,7 @@ public class ClienteDaoBD implements ClienteDao {
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro de Sistema - Problema ao salvar paciente no Banco de Dados!");
+            System.err.println("Erro de Sistema - Problema ao salvar cliente no Banco de Dados!");
             throw new BDException(ex);
         } finally {
             fecharConexao();
@@ -107,7 +112,7 @@ public class ClienteDaoBD implements ClienteDao {
             comando.executeUpdate();
 
         } catch (SQLException ex) {
-            System.err.println("Erro de Sistema - Problema ao atualizar paciente no Banco de Dados!");
+            System.err.println("Erro de Sistema - Problema ao atualizar cliente no Banco de Dados!");
             throw new BDException(ex);
         } finally {
             fecharConexao();
@@ -138,7 +143,7 @@ public class ClienteDaoBD implements ClienteDao {
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro de Sistema - Problema ao buscar os pacientes do Banco de Dados!");
+            System.err.println("Erro de Sistema - Problema ao buscar os clientes do Banco de Dados!");
             throw new BDException(ex);
         } finally {
             fecharConexao();
@@ -176,8 +181,9 @@ public class ClienteDaoBD implements ClienteDao {
         return (null);
     }
 
+    @Override
     public Cliente procurarPorRg(String rg) {
-        String sql = "SELECT * FROM cliente WHERE rg = ?";
+          String sql = "SELECT * FROM cliente WHERE rg = ?";
 
         try {
             conectar(sql);
@@ -189,7 +195,6 @@ public class ClienteDaoBD implements ClienteDao {
                 int id = resultado.getInt("id");
                 String nome = resultado.getString("nome");
                 String telefone = resultado.getString("telefone");
-
                 Cliente cli = new Cliente(id, rg, nome, telefone);
 
                 return cli;
@@ -197,7 +202,7 @@ public class ClienteDaoBD implements ClienteDao {
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro de Sistema - Problema ao buscar o paciente pelo rg do Banco de Dados!");
+            System.err.println("Erro de Sistema - Problema ao buscar o cliente pelo id do Banco de Dados!");
             throw new BDException(ex);
         } finally {
             fecharConexao();
@@ -206,8 +211,9 @@ public class ClienteDaoBD implements ClienteDao {
         return (null);
     }
 
+    @Override
     public List<Cliente> listarPorNome(String nome) {
-        List<Cliente> listaClientes = new ArrayList<>();
+         List<Cliente> listaPacientes = new ArrayList<>();
         String sql = "SELECT * FROM cliente WHERE nome LIKE ?";
 
         try {
@@ -220,19 +226,23 @@ public class ClienteDaoBD implements ClienteDao {
                 String rg = resultado.getString("rg");
                 String nomeX = resultado.getString("nome");
                 String telefone = resultado.getString("telefone");
-
+                
                 Cliente cli = new Cliente(id, rg, nomeX, telefone);
 
-                listaClientes.add(cli);
+                listaPacientes.add(cli);
 
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro de Sistema - Problema ao buscar os pacientes pelo nome do Banco de Dados!");
+            System.err.println("Erro de Sistema - Problema ao buscar os clientes pelo nome do Banco de Dados!");
             throw new BDException(ex);
         } finally {
             fecharConexao();
         }
-        return (listaClientes);
+        return (listaPacientes);
     }
-}
+    }
+
+  
+
+   

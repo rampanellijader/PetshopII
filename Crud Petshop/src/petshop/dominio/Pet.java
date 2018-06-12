@@ -52,4 +52,8 @@ public class Pet {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setTp_animal(String tp_animal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -18,7 +18,7 @@ public class ClienteUi {
         clienteDao = new ClienteDaoBD();
     }
 
-    public void menu() {
+    public void menuCliente() {
         int opcao = -1;
         do {
             try {

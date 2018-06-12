@@ -1,13 +1,16 @@
 
 package petshop.view;
 
+
 import dao.PetDao;
 import java.util.InputMismatchException;
 import java.util.List;
-import petshop.dao.impl_bd.ClienteDaoBD;
 import petshop.dao.impl_bd.PetDaoBD;
 import petshop.dominio.Cliente;
 import petshop.dominio.Pet;
+import petshop.negocio.ClienteNegocio;
+import petshop.negocio.NegocioException;
+import petshop.negocio.PetNegocio;
 import petshop.util.Console;
 import petshop.view.menu.ClienteMenu;
 import petshop.view.menu.PetMenu;
@@ -20,7 +23,7 @@ public class PetUi {
         petDao = new PetDaoBD();
     }
 
-    public void menu() {
+    public void menuPet() {
         int opcao = -1;
         do {
             try {
@@ -56,9 +59,16 @@ public class PetUi {
     } 
 
     private void cadastrarPet() {
+       try{
        String nome = Console.scanString("nome");
        String tp_animal = Console.scanString("tipo animal");
-      // Cliente cli = listar();
+       String rg_cli = Console.scanString("Digite o rg do dono do pet: ");
+       Cliente c = ClienteNegocio.procurarPorRg(rg_cli);
+        PetNegocio.salvar(new Pet(nome, tp_animal, c));
+       System.out.println("Pet " + nome + " cadastrado com sucesso!");
+       }  catch (NegocioException ex){
+         System.out.println("Cadstrar as informações de acordo com o item solicitado");
+    }
     }
 
     private void deletarPet() {
@@ -102,6 +112,7 @@ public class PetUi {
         System.out.println("Pet");
         System.out.println("Nome: " + p.getNome());
         System.out.println("Tipo animal: " + p.getTp_animal());
+        System.out.println("Cliente: " + p.getCliente().getNome())  ;
         System.out.println("-----------------------------");
     }
     private void mostrarPets(List<Pet> listaPets) {
@@ -111,11 +122,12 @@ public class PetUi {
             System.out.println("-----------------------------\n");
             System.out.println(String.format("%-10s", "RG") + "\t"
                     + String.format("%-20s", "|NOME") + "\t"
-                    + String.format("%-20s", "|TIPO ANIMAL"));
+                    + String.format("%-20s", "|TIPO ANIMAL") +"\t"
+                    + String.format("%-20s", "|CLIENTE"));
             for (Pet pet : listaPets) {
                 System.out.println(String.format("%-20s", pet.getNome()) + "\t"
-                        + String.format("%-20s", "|" + pet.getTp_animal()));
-                       
+                        + String.format("%-20s", "|" + pet.getTp_animal())
+                        + String.format("%-20s", "|" + pet.getCliente().getNome()));
             }
         }
     }
