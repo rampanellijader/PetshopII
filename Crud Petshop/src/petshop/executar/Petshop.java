@@ -2,12 +2,12 @@
 package petshop.executar;
 
 
-import petshop.view.ClienteUi;
+import petshop.view.MainUi;
 
 
 public class Petshop {
    public static void main(String[] args) {
-        new ClienteUi().menu(); 
+        new MainUi().menu(); 
 }
 }
 

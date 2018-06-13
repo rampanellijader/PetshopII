@@ -20,13 +20,10 @@ public class MainUi {
                 opcao = Console.scanInt("Digite sua opção:");
                 switch (opcao) {
                     case MainMenu.OP_CLIENTE:
-                       new ClienteUi().menuCliente() ;
+                       new ClienteUi().menuCliente();
                         break;
                     case MainMenu.OP_PET:
-                        PetUi().menuPet();
-                        break;
-                    case MainMenu.OP_VENDA:
-                        VendaUi().menu();
+                       new PetUi().menuPet();
                         break;
                     case ClienteMenu.OP_SAIR:
                         System.out.println("Finalizando a aplicacao..");
@@ -40,6 +37,8 @@ public class MainUi {
 
         } while (opcao != ClienteMenu.OP_SAIR);    
 }
+
+ 
 
    
 }

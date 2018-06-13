@@ -2,10 +2,10 @@
 package petshop.view;
 
 
-import dao.PetDao;
 import java.util.InputMismatchException;
 import java.util.List;
-import petshop.dao.impl_bd.PetDaoBD;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import petshop.dominio.Cliente;
 import petshop.dominio.Pet;
 import petshop.negocio.ClienteNegocio;
@@ -17,13 +17,15 @@ import petshop.view.menu.PetMenu;
 
 
 public class PetUi {
-   private PetDao petDao;
+   private PetNegocio petNegocio;
+   private ClienteNegocio clienteNegocio;
    
         public PetUi() {
-        petDao = new PetDaoBD();
+        petNegocio = new PetNegocio();
+        clienteNegocio = new ClienteNegocio();
     }
 
-    public void menuPet() {
+    public void menuPet()  {
         int opcao = -1;
         do {
             try {
@@ -59,12 +61,13 @@ public class PetUi {
     } 
 
     private void cadastrarPet() {
-       try{
-       String nome = Console.scanString("nome");
-       String tp_animal = Console.scanString("tipo animal");
+       
+       String nome = Console.scanString("nome: ");
+       String tp_animal = Console.scanString("tipo animal: ");
        String rg_cli = Console.scanString("Digite o rg do dono do pet: ");
-       Cliente c = ClienteNegocio.procurarPorRg(rg_cli);
-        PetNegocio.salvar(new Pet(nome, tp_animal, c));
+       try{
+        Cliente c = clienteNegocio.procurarPorRg(rg_cli);
+        petNegocio.salvar(new Pet(nome, tp_animal, c));
        System.out.println("Pet " + nome + " cadastrado com sucesso!");
        }  catch (NegocioException ex){
          System.out.println("Cadstrar as informações de acordo com o item solicitado");
@@ -73,37 +76,40 @@ public class PetUi {
 
     private void deletarPet() {
        String nome = Console.scanString("Nome do pet a ser deletado: ");
-       Pet pet = petDao.procurarPorNome(nome);
+       Pet pet = petNegocio.procurarPorNome(nome);
         this.mostrarPet(pet);
     }
 
-    private void atualizarPet() {
-        String nome = Console.scanString("Nome do pet a ser alterado: ");
-
-        Pet pet = petDao.procurarPorNome(nome);
-        this.mostrarPet(pet);
-
-        System.out.println("Digite os dados do pet que quer alterar [Vazio caso nao queira]");
-        String tp_animal = Console.scanString("Tipo animal: ");
-        if (!nome.isEmpty()) {
-           pet.setTp_animal(tp_animal);        
-        }
-       
-
-        petDao.atualizar(pet);
-        System.out.println("Pet " + nome + " atualizado com sucesso!");
+    private void atualizarPet()  {
+       try {
+           String nome = Console.scanString("Nome do pet a ser alterado: ");
+           
+           Pet pet = petNegocio.procurarPorNome(nome);
+           this.mostrarPet(pet);
+           
+           System.out.println("Digite os dados do pet que quer alterar [Vazio caso nao queira]");
+           String tp_animal = Console.scanString("Tipo animal: ");
+           if (!nome.isEmpty()) {
+               pet.setTp_animal(tp_animal);
+           }
+           
+           petNegocio.atualizar(pet);
+           System.out.println("Pet " + nome + " atualizado com sucesso!");
+       } catch (NegocioException ex) {
+           Logger.getLogger(PetUi.class.getName()).log(Level.SEVERE, null, ex);
+       }
  
     }
 
     private void mostrarPets() {
-        List<Pet> listaPets = petDao.listar();
+        List<Pet> listaPets = petNegocio.listar();
         this.mostrarPets(listaPets);
        
     }
 
     private void consultarPetsPorNome() {
         String nome = Console.scanString("Nome: ");
-        List<Pet> listaPet = petDao.listarPorNome(nome);
+        List<Pet> listaPet = petNegocio.listarPorNome(nome);
         this.mostrarPets(listaPet);
     }
      

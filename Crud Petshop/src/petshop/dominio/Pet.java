@@ -23,6 +23,14 @@ public class Pet {
       this.cliente =  cliente;
       
  }
+
+    public Pet(int id, String nome, String tp_animal, String rg_cli, Cliente c) {
+      this.id = id;
+      this.nome = nome;
+      this.tp_animal = tp_animal;
+      this.cliente =  c;
+        
+    }
     public String getNome() {
         return nome;
     }
@@ -54,6 +62,12 @@ public class Pet {
     }
 
     public void setTp_animal(String tp_animal) {
+        this.tp_animal = tp_animal;
+    }
+
+    public boolean isEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-}
+
+     
+    }
