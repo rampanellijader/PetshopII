@@ -25,7 +25,7 @@ public class PetUi {
         clienteNegocio = new ClienteNegocio();
     }
 
-    public void menuPet()  {
+    public void menuPet() throws NegocioException  {
         int opcao = -1;
         do {
             try {
@@ -42,10 +42,10 @@ public class PetUi {
                         atualizarPet();
                         break;
                     case PetMenu.OP_LISTAR:
-                        mostrarPets();
+                        listarPets();
                         break;
                     case PetMenu.OP_CONSULTAR:
-                        consultarPetsPorNome();
+                        listarPorNome();
                         break;
                     case PetMenu.OP_SAIR:
                         System.out.println("Finalizando a aplicacao..");
@@ -69,15 +69,16 @@ public class PetUi {
         Cliente c = clienteNegocio.procurarPorRg(rg_cli);
         petNegocio.salvar(new Pet(nome, tp_animal, c));
        System.out.println("Pet " + nome + " cadastrado com sucesso!");
+       
        }  catch (NegocioException ex){
          System.out.println("Cadstrar as informações de acordo com o item solicitado");
     }
     }
 
-    private void deletarPet() {
+    private void deletarPet() throws NegocioException {
        String nome = Console.scanString("Nome do pet a ser deletado: ");
        Pet pet = petNegocio.procurarPorNome(nome);
-        this.mostrarPet(pet);
+        this.listarPet(pet);
     }
 
     private void atualizarPet()  {
@@ -85,7 +86,7 @@ public class PetUi {
            String nome = Console.scanString("Nome do pet a ser alterado: ");
            
            Pet pet = petNegocio.procurarPorNome(nome);
-           this.mostrarPet(pet);
+           this.listarPet(pet);
            
            System.out.println("Digite os dados do pet que quer alterar [Vazio caso nao queira]");
            String tp_animal = Console.scanString("Tipo animal: ");
@@ -101,19 +102,19 @@ public class PetUi {
  
     }
 
-    private void mostrarPets() {
-        List<Pet> listaPets = petNegocio.listar();
-        this.mostrarPets(listaPets);
+    private void listarPets() {
+        List<Pet> listarPets = petNegocio.listarPets();
+        this.listarPets(listarPets);
        
     }
 
-    private void consultarPetsPorNome() {
+    private void listarPorNome() {
         String nome = Console.scanString("Nome: ");
-        List<Pet> listaPet = petNegocio.listarPorNome(nome);
-        this.mostrarPets(listaPet);
+        List<Pet> listarPet = petNegocio.listarPorNome(nome);
+        this.listarPets(listarPet);
     }
      
-    private void mostrarPet(Pet p){
+    private void listarPet(Pet p){
         System.out.println("-----------------------------");
         System.out.println("Pet");
         System.out.println("Nome: " + p.getNome());
@@ -121,14 +122,13 @@ public class PetUi {
         System.out.println("Cliente: " + p.getCliente().getNome())  ;
         System.out.println("-----------------------------");
     }
-    private void mostrarPets(List<Pet> listaPets) {
+    private void listarPets(List<Pet> listaPets) {
       if(listaPets.isEmpty())  {
           System.out.println("Pets não encontrados");
       }else {
             System.out.println("-----------------------------\n");
-            System.out.println(String.format("%-10s", "RG") + "\t"
-                    + String.format("%-20s", "|NOME") + "\t"
-                    + String.format("%-20s", "|TIPO ANIMAL") +"\t"
+            System.out.println(String.format("%-20s", "|NOME") + "\t"
+                    + String.format("%-20s", "|TIPO ANIMAL") + "\t"
                     + String.format("%-20s", "|CLIENTE"));
             for (Pet pet : listaPets) {
                 System.out.println(String.format("%-20s", pet.getNome()) + "\t"

@@ -13,22 +13,23 @@ import petshop.util.Console;
 public class PetNegocio {
     
       private PetDaoBD petDao;
+      
 
     public PetNegocio() {
         petDao = new PetDaoBD();
     
 }
     
-        public void salvar(Pet p) throws NegocioException {
-        this.validarCamposObrigatorios(p);
-        petDao.salvar(p);
+        public void salvar(Pet p)  {
+               petDao.salvar(p);
     }
 
-   private void validarCamposObrigatorios(Pet p) throws NegocioException {
-         if (p.getNome() == null || p.getNome().isEmpty()) {
+ /*  private void validarCamposObrigatorios(Pet p) throws NegocioException {
+         if (p.getNome() == null || p.getNome().isEmpty()) {             
             throw new NegocioException("Campo nome não informado");
         }
-    }
+         
+    }*/
  
  
     private boolean petExiste(String nome) {
@@ -37,29 +38,29 @@ public class PetNegocio {
     }
 
     public List<Pet> listarPorNome(String nome) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return petDao.listarPorNome(nome);
     }
 
-    public List<Pet> listar() {
-         return(petDao.listar()) ;
+    public List<Pet> listarPets() {
+         return(petDao.listarPets()) ;
     }
 
     public void atualizar(Pet p) throws NegocioException {
-         if (p == null || p.getNome()== null) {
+        /* if (p == null || p.getNome()== null) {
             throw new NegocioException("Sala nao existe!");
         }
-        this.validarCamposObrigatorios(p);
+        this.validarCamposObrigatorios(p) */
          petDao.atualizar(p);
     }
 
     public Pet procurarPorNome(String nome) throws NegocioException {
           if (nome == null || nome.isEmpty()) {
             throw new NegocioException("Campo Nome nao informado");
-    }  Pet pet = petDao.procurarPorNome(nome);
+    }  Pet p = petDao.procurarPorNome(nome);
        if(nome == null){
            throw new NegocioException("Cliente não encontrado!");
        }
-        return (pet);
+        return (p);
       }
     }
 

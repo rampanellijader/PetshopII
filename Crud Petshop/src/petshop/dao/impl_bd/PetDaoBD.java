@@ -118,7 +118,7 @@ public class PetDaoBD implements PetDao{
 
     }
 
-     public List<Pet> listar() {
+     public List<Pet> listarPets() {
         List<Pet> listapets = new ArrayList<>();
 
         String sql = "SELECT * FROM pet";
@@ -249,6 +249,7 @@ public class PetDaoBD implements PetDao{
         return (listaPets);
     }
 
+ 
     }
 
 
